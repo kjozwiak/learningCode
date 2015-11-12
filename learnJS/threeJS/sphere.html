@@ -1,0 +1,94 @@
+<html>
+    <head>
+    <title>Basic Three.JS</title>
+    <style>
+      body { margin: 0; }
+      canvas { width: 100%; height: 100%; }
+    </style>
+  </head>
+  <body>
+    <input type="range" id="zSlider" min="75" max="300" step="1" value="100">
+    <select id="colors">
+      <option value="red">Red</option>
+      <option value="blue">Blue</option>
+      <option value="black">Black</option>
+    </select>
+    <script type="application/javascript" src="three.js"></script>
+    <script type="application/javascript" src="stats.min.js"></script>
+    <script>
+
+      var scene, camera, renderer;
+      var geometry, material, sphere;
+      var zValue, stats;
+
+      init();
+      animate();
+
+      function init() {
+
+        scene = new THREE.Scene();
+        zVal = document.getElementById("zSlider");
+
+        stats = new Stats();
+        stats.setMode(0);
+        document.body.appendChild(stats.domElement);
+        stats.domElement.style.position = "absolute";
+        stats.domElement.style.right = "0px";
+        stats.domElement.style.top = "0px";
+
+        // PerspectiveCamera attributes: (Field of View, Aspect Ratio, near, far (clipping plane))
+        camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+
+        // three.js come with other renderers as fallback for older browsers that don't support WebGL (find more info)
+        // alpha is used for a transparent background
+        // you can set the defualt transparency color using: renderer.setClearColor(0x000000, 0);
+        renderer = new THREE.WebGLRenderer({
+          alpha: true
+        });
+
+        renderer.setSize(window.innerWidth, window.innerHeight);
+
+        // add the element to our HTML document
+        document.body.appendChild(renderer.domElement);
+
+        geometry = new THREE.SphereGeometry(35, 30, 30);
+
+        material = new THREE.MeshBasicMaterial({
+          color: 0x000000,
+          wireframe: true
+        });
+
+        sphere = new THREE.Mesh(geometry, material);
+        scene.add(sphere);
+
+        camera.position.z = 100;
+
+        zSlider.onchange = function changeZ() {
+          camera.position.z = this.value;
+        }
+
+        colors.onchange = function changeColor() {
+          switch (colors.value) {
+            case "red":
+              sphere.material.color.setHex(0xFF0000);
+              break;
+            case "blue":
+              sphere.material.color.setHex(0x0000FF);
+              break;
+            case "black":
+              sphere.material.color.setHex(0x000000);
+              break;
+          }
+        }
+
+      }
+
+      function animate() {
+        requestAnimationFrame(animate);
+        sphere.rotation.y += 0.1;
+        renderer.render(scene, camera);
+        stats.update();
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Practice Objects/Constructors</title>
+    <meta charset="UTF-8" />
+
+    <style type="text/css">
+      canvas { border: 1px solid black; }
+
+      #centerCanvas {
+        width: 800px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      textarea {
+        resize: none;
+        width: 40px;
+        height: 15px;
+        text-align: center;
+      }
+    </style>
+
+    <script>
+      var objectArray = new Array();
+      var textArea;
+
+      function mainDraw() {
+        requestAnimationFrame(mainDraw);
+        for (x = 0; x < objectArray.length; x++) {
+          objectArray[x].draw();
+        }
+      }
+
+      function Unit(x, y, radius) {
+        this.x = x;
+        this.y = y;
+        this.radius = radius;
+      }
+
+      Unit.prototype = {
+        draw: function() {
+          ctx.beginPath();
+          ctx.arc(this.x, this.y, this.radius, 0, 2 * Math.PI);
+          ctx.fill();
+        }
+      }
+
+      // going this route just to learn Object Prototypes, wouldn't do it this way normally (wouldn't track Objects)
+      function mouseEvents() {
+        var randomX = Math.floor(Math.random() * (canvas.width - 10) + 10);
+        var randomY = Math.floor(Math.random() * (canvas.height - 10) + 10);
+        var randomRadius = Math.floor(Math.random() * (30 - 5) + 5);
+        objectArray.push(new Unit(randomX, randomY, randomRadius));
+        textArea = document.getElementById("currentCount");
+        textArea.value = objectArray.length
+      }
+
+      function clearingArray() {
+        objectArray.length = 0;
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        textArea.value = objectArray.length;
+      }
+
+      function init() {
+        var canvas = document.getElementById("canvas");
+        ctx = canvas.getContext("2d");
+        window.onmousedown = mouseEvents;
+        requestAnimationFrame(mainDraw);
+      }
+    </script>
+
+  </head>
+  <body onload="init()">
+    <div id="centerCanvas">
+      <canvas id="canvas" width="800" height="600"></canvas>
+      <button id="clear" type="button" onclick="clearingArray()" align="right">
+        Flush Array of current Objects
+      </button>
+      <textarea id="currentCount"></textarea>
+    </div>
+  </body>
+</html>
