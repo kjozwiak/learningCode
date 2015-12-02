@@ -1,13 +1,14 @@
 #include <iostream>
 
 // this function will fail with a ambiguous error in the compiler
-int cout() {
+int cout()
+{
 	return 5;
 }
 
 int main() {
 
-	/* using declaration statements
+	/* you could also use the following declaration statements
 	 * using std::cout;
 	 * using std::endl;
 	 * using std::cin;
@@ -17,7 +18,7 @@ int main() {
 	using namespace std;
 
 	cout << "Please enter any number!: ";
-	int myNumber = 0;
+	int myNumber{};
 	cin >> myNumber;
 	cout << "You've entered: " << myNumber << endl;
 	return 0;

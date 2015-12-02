@@ -16,7 +16,7 @@ int main()
 void outputValues(int x, int y, int z)
 {
 	using namespace std;
-	cout << "uniform initialization: " << x <<
-		" implicit initialization: " << y <<
-		" explicit initialization: " << z << "\n";
+	cout << "uniform initialization: " << x << "\n" <<
+			" implicit initialization: " << y << "\n" <<
+			" explicit initialization: " << z << "\n";
 }
