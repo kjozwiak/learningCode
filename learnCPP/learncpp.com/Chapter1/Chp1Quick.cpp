@@ -1,24 +1,24 @@
 #include <iostream>
 
-int readNumber();
-void writeAnswer(int x);
+int16_t readNumber();
+void writeAnswer(int16_t x);
 
 int main()
 {
-	int firstNumber = readNumber();
-	int secondNumber = readNumber();
+	int16_t firstNumber = readNumber();
+	int16_t secondNumber = readNumber();
 	writeAnswer(firstNumber + secondNumber);
 }
 
-int readNumber()
+int16_t readNumber()
 {
 	std::cout << "Please insert a number: ";
-	int userNum;
+	int16_t userNum;
 	std::cin >> userNum;
 	return userNum;
 }
 
-void writeAnswer(int x)
+void writeAnswer(int16_t x)
 {
 	std::cout << "Total: " << x << "\n"; 
 }
